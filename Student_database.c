@@ -189,18 +189,17 @@ void add_record(SLL **ptr)
 	SLL *new,*p,*last;
 	new=malloc(sizeof(SLL));
 	p=*ptr;
-	if(*ptr==0)
-		new->rn=1;
-	else
+	while (p) 
 	{
-		for(i=1;p;i++)
+        	if (p->rn == i) 
 		{
-				if(p->rn != i)
-					break;
-				p=p->next; 
-		}
-		new->rn=i;
-	}
+            		i++;
+            		p = *ptr;
+        	}
+		else 
+            		p = p->next;
+    	}
+    	new->rn = i;
 	printf("name and percentage: ");
 	scanf("%s%f",new->name,&new->per);
 	new->next=0;
