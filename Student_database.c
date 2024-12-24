@@ -185,7 +185,7 @@ int count_record(SLL *ptr)
 }
 void add_record(SLL **ptr)
 {
-	int i;
+	int i=1;
 	SLL *new,*p,*last;
 	new=malloc(sizeof(SLL));
 	p=*ptr;
