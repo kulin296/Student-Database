@@ -18,6 +18,7 @@ void reverse_list(SLL **);
 void save_record(SLL *);
 void sort_record(SLL *);
 void exit_file(SLL *);
+int flag;
 void main()
 {
 	SLL *head=0;
@@ -148,6 +149,7 @@ void save_record(SLL *ptr)
 
 void reverse_list(SLL **ptr)
 {
+	flag^=1;
 	if(*ptr==0)
 	{
 		printf("No records found!\n");
@@ -189,28 +191,49 @@ void add_record(SLL **ptr)
 	SLL *new,*p,*last;
 	new=malloc(sizeof(SLL));
 	p=*ptr;
-	while (p) 
-	{
-        	if (p->rn == i) 
-		{
-            		i++;
-            		p = *ptr;
-        	}
-		else 
-            		p = p->next;
-    	}
-    	new->rn = i;
+	while (p) {
+        if (p->rn == i) {
+            i++;
+            p = *ptr;
+        } else {
+            p = p->next;
+        }
+    }
+    new->rn = i;
 	printf("name and percentage: ");
 	scanf("%s%f",new->name,&new->per);
-	new->next=0;
-	if(*ptr==0) 
+	//new->next=0;
+	if(flag==0)
+	{
+	if((*ptr==0) || (new->rn<(*ptr)->rn))
+	{
+		new->next=*ptr;
 		*ptr=new;
+	}
 	else
 	{
 		last=*ptr;
-		while(last->next)
+		while((last->next!=0)&&(new->rn>last->next->rn))
 			last=last->next;
+		new->next=last->next;
 		last->next=new;
+	}
+	}
+	else
+	{
+		if((*ptr==0) || (new->rn>(*ptr)->rn))
+		{
+		new->next=*ptr;
+		*ptr=new;
+		}
+		else
+		{
+			last=*ptr;
+			while((last->next!=0)&&(new->rn<last->next->rn))
+				last=last->next;
+			new->next=last->next;
+			last->next=new;
+		}
 	}
 }
 
